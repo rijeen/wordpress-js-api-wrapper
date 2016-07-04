@@ -1,0 +1,24 @@
+{
+  "name": "wordpress-js-api-wrapper",
+  "version": "0.1.0",
+  "description": "Wraps an external wordpress v2 API in a simple to use singleton class.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo "Error: no test specified" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:RickJensen/wordpress-js-api-wrapper.git"
+  },
+  "keywords": [
+    "wordpress",
+    "api",
+    "wrapper",
+    "javascript"
+  ],
+  "author": "Rick Jensen <rick.jensen87@gmail.com> (http://thejensencodes.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RickJensen/wordpress-js-api-wrapper/issues"
+  }
+}
