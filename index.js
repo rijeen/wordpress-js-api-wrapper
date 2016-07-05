@@ -71,3 +71,5 @@ WPJSApi.Statuses = {
     'list': (args) => WPJSApi.call('wp', 'statuses', args),
     'get': (id) => WPJSApi.call('wp', 'statuses/' + id.toString())
 }
+
+module.exports = WPJSApi;
