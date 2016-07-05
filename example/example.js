@@ -1,18 +1,18 @@
+function success(rsp) {
+    console.log('Success');
+}
 
-//Init
-WPJS.init('my_wp_url');
+function error(error) {
+    console.log('Error', error);
+}
+
+WPJSApi.init('http://hansogreta.acc.linkin.se./wp');
 
 //Pages
-WPJS.Pages.list({ page: 2, per_page: 10 })
-    .then(function(rsp) {
-            console.log(rsp);
-        }
-        .catch(function() {
-            //Error
-        })
-    );
+WPJSApi.Pages.get(10).then(success, error);
+WPJSApi.Pages.list().then(success, error);
 
-//Custom
-WPJS.call('acf', 'options').then(function(rsp) {
-    //Went good
-});
+//Posts
+WPJSApi.Posts.list({ 
+    per_page: 2 
+}).then(success, error);;
