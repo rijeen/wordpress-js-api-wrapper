@@ -3,7 +3,12 @@ A very simple promise-based javascript wrapper for the Wordpress REST API v2.
 
 
 ##How to use
-Usage with node and npm.
+
+Installation with npm
+```
+npm install wordpress-js-api-wrapper
+```
+
 ```javascript
 import WPJSApi from 'wordpress-js-api-wrapper';
 
@@ -21,7 +26,7 @@ WPJSApi.Pages.list().then(function(rsp) {
 let args = { per_page: 10, page: 3 };
 WPJSApi.Pages.list(args);
 
-//All "get" methods accepts and id (integer)
+//All "get" methods accepts an id (integer)
 WPJSApi.Pages.get(3);
 
 //Both type of methods returns a Promise-object, on which you can use then / catch for callbacks.
