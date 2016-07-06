@@ -6,7 +6,7 @@ function error(error) {
     console.log('Error', error);
 }
 
-WPJSApi.init('http://hansogreta.acc.linkin.se./wp');
+WPJSApi.init('http://inserturl.com');
 
 //Pages
 WPJSApi.Pages.get(10).then(success, error);

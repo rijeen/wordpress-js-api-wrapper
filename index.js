@@ -1,37 +1,35 @@
 "use strict";
 
-const WPJSApiHTTP = {
-    call: function(url, args, method) {
-        var promise = new Promise(function (resolve, reject) {
-            var client = new XMLHttpRequest();
-            var uri = url;
-            if (args) {
-                uri += '?';
-                var argcount = 0;
-                for (var key in args) {
-                    if (args.hasOwnProperty(key)) {
-                        if (argcount++) {
-                            uri += '&';
-                        }
-                        uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
+const WPJSApiHTTP = function(url, args, method) {
+    var promise = new Promise(function (resolve, reject) {
+        var client = new XMLHttpRequest();
+        var uri = url;
+        if (args) {
+            uri += '?';
+            var argcount = 0;
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    if (argcount++) {
+                        uri += '&';
                     }
+                    uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
                 }
             }
-            client.open(method, uri);
-            client.send();
-            client.onload = function () {
-                if (this.status >= 200 && this.status < 300) {
-                    resolve(JSON.parse(this.response));
-                } else {
-                    reject(this.statusText);
-                }
-            };
-            client.onerror = function () {
+        }
+        client.open(method, uri);
+        client.send();
+        client.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+                resolve(JSON.parse(this.response));
+            } else {
                 reject(this.statusText);
-            };
-        });
-        return promise;
-    }
+            }
+        };
+        client.onerror = function () {
+            reject(this.statusText);
+        };
+    });
+    return promise;
 }
 
 const WPJSApi = {
@@ -47,29 +45,33 @@ const WPJSApi = {
             method = 'GET';
         }
         var url = [this.base_url, 'wp-json', domain + '/v2', endpoint].join('/');
-        return WPJSApiHTTP.call(url, args, method);
+        return WPJSApiHTTP(url, args, method);
     }
 }
 
-WPJSApi.Pages = {
-    'list': (args) => WPJSApi.call('wp', 'pages', args),
-    'get': (id) => WPJSApi.call('wp', 'pages/' + id.toString())
+const WPJSApiEndpoint = {
+    create: function(domain, endpoint) {
+        return {
+            domain: domain,
+            endpoint: endpoint,
+            listURL: (args) => [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint].join('/'),
+            getURL: (id, args) => [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint, id, args].join('/'),
+            'list': (args) =>  WPJSApi.call(domain, endpoint, args),
+            'get': (id, args) => WPJSApi.call(domain, [endpoint, id.toString(), args].join('/'))
+        };
+    }
 }
-WPJSApi.Posts = {
-    'list': (args) => WPJSApi.call('wp', 'posts', args),
-    'get': (id) => WPJSApi.call('wp', 'posts/' + id.toString())
-}
-WPJSApi.Media = {
-    'list': (args) => WPJSApi.call('wp', 'media', args),
-    'get': (id) => WPJSApi.call('wp', 'media/' + id.toString())
-}
-WPJSApi.Types = {
-    'list': (args) => WPJSApi.call('wp', 'types', args),
-    'get': (id) => WPJSApi.call('wp', 'types/' + id.toString())
-}
-WPJSApi.Statuses = {
-    'list': (args) => WPJSApi.call('wp', 'statuses', args),
-    'get': (id) => WPJSApi.call('wp', 'statuses/' + id.toString())
-}
+
+//Add Endpoints
+WPJSApi.Pages       = WPJSApiEndpoint.create('wp', 'pages');
+WPJSApi.Posts       = WPJSApiEndpoint.create('wp', 'posts');
+WPJSApi.Media       = WPJSApiEndpoint.create('wp', 'media');
+WPJSApi.Types       = WPJSApiEndpoint.create('wp', 'types');
+WPJSApi.Statuses    = WPJSApiEndpoint.create('wp', 'statuses');
+WPJSApi.Comments    = WPJSApiEndpoint.create('wp', 'comments');
+WPJSApi.Taxonomies  = WPJSApiEndpoint.create('wp', 'taxonomies');
+WPJSApi.Categories  = WPJSApiEndpoint.create('wp', 'categories');
+WPJSApi.Tags        = WPJSApiEndpoint.create('wp', 'tags');
+WPJSApi.Users       = WPJSApiEndpoint.create('wp', 'users');
 
 module.exports = WPJSApi;
