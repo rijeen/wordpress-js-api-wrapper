@@ -7,6 +7,8 @@ logs
 *.log
 npm-debug.log*
 
+.DS_Store
+
 # Runtime data
 pids
 *.pid
@@ -92,5 +94,5 @@ fabric.properties
 
 # *.iml
 # modules.xml
-# .idea/misc.xml 
+# .idea/misc.xml
 # *.ipr

@@ -54,10 +54,10 @@ const WPJSApiEndpoint = {
         return {
             domain: domain,
             endpoint: endpoint,
-            listURL: (args) => [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint].join('/'),
-            getURL: (id, args) => [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint, id, args].join('/'),
-            'list': (args) =>  WPJSApi.call(domain, endpoint, args),
-            'get': (id, args) => WPJSApi.call(domain, [endpoint, id.toString(), args].join('/'))
+            listURL: function(args) { return [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint].join('/') },
+            getURL: function(id, args) { return [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint, id, args].join('/') },
+            'list': function(args) { return WPJSApi.call(domain, endpoint, args) },
+            'get': function(id, args) { return  WPJSApi.call(domain, [endpoint, id.toString(), args].join('/')) }
         };
     }
 }
