@@ -46,7 +46,8 @@ const WPJSApi = {
         }
         var url = [this.base_url, 'wp-json', domain + '/v2', endpoint].join('/');
         return WPJSApiHTTP(url, args, method);
-    }
+    },
+    create: WPJSApiEndpoint.create
 }
 
 const WPJSApiEndpoint = {

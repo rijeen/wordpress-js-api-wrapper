@@ -85,14 +85,14 @@ Or create a new custom endpoint:
 ```javascript
 WPJSAPi.init('http://www.example.com');
 
-let MyCustomEndpoint = WPJSApiEndpoint.create('domain', 'endpoint');
+let MyCustomEndpoint = WPJSApi.create('domain', 'endpoint');
 MyCustomEndpoint.list([ myarg: 1 ]); //calls base on the endpoint, usually the listing
 
 //Real life example:
 //Based on plugin https://wordpress.org/plugins/wp-api-menus/
 
-let WPJSApiMenu = WPJSApiEndpoint.create('wp-api-menus', 'menus');
-let WPJSApiMenuLocation = WPJSApiEndpoint.create('wp-api-menus', 'menus-locations');
+let WPJSApiMenu = WPJSApi.create('wp-api-menus', 'menus');
+let WPJSApiMenuLocation = WPJSApi.create('wp-api-menus', 'menus-locations');
 
 console.log(WPJSApiMenu.getURL(3)); // returns string: http://example.com/wp-json/wp-api-menus/v2/menus/3
 
