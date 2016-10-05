@@ -32,6 +32,19 @@ const WPJSApiHTTP = function(url, args, method) {
     return promise;
 }
 
+const WPJSApiEndpoint = {
+    create: function(domain, endpoint) {
+        return {
+            domain: domain,
+            endpoint: endpoint,
+            listURL: function(args) { return [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint].join('/') },
+            getURL: function(id, args) { return [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint, id, args].join('/') },
+            'list': function(args) { return WPJSApi.call(domain, endpoint, args) },
+            'get': function(id, args) { return  WPJSApi.call(domain, [endpoint, id.toString(), args].join('/')) }
+        };
+    }
+}
+
 const WPJSApi = {
     init: function (url) {
         this.base_url = url;
@@ -50,18 +63,7 @@ const WPJSApi = {
     create: WPJSApiEndpoint.create
 }
 
-const WPJSApiEndpoint = {
-    create: function(domain, endpoint) {
-        return {
-            domain: domain,
-            endpoint: endpoint,
-            listURL: function(args) { return [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint].join('/') },
-            getURL: function(id, args) { return [WPJSApi.base_url, 'wp-json', domain + '/v2', endpoint, id, args].join('/') },
-            'list': function(args) { return WPJSApi.call(domain, endpoint, args) },
-            'get': function(id, args) { return  WPJSApi.call(domain, [endpoint, id.toString(), args].join('/')) }
-        };
-    }
-}
+
 
 //Add Endpoints
 WPJSApi.Pages       = WPJSApiEndpoint.create('wp', 'pages');
