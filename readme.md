@@ -64,11 +64,28 @@ $.get(WPJSApi.Media.getURL(3), function(rsp) {
 | WPJSApi.Tags | list, get, getURL, listURL   | Array, Object, string, string    |
 | WPJSApi.Users | list, get, getURL, listURL   | Array, Object, string, string   |
 
-| Method | Parameters | ...
-| list(args)  | args object |
-| get(id, args)     | id int, args array | Pass extra parameters using the args array, will be appended to end of url-string.
-| listURL(args)     | args object |
-| getURL(id, args)  | id int, args array | Pass extra parameters using the args array, will be appended to end of url-string.
+| Method | Parameters | ... |
+| list(args)  | args object | |
+| get(id, args)     | id int, args array | Pass extra parameters using the args array, will be appended to end of url-string. |
+| listURL(args)     | args object | |
+| getURL(id, args)  | id int, args array | Pass extra parameters using the args array, will be appended to end of url-string.|
+
+## Modifying fetch XMLHTTPRequest
+Its possible to modify the built in XMLHTTPRequest by passing a second argument to init-method. 
+It accepts an object with the field "beforeSend".
+
+Adding a HTTP Basic Authentication:
+```javascript
+WPJSApi.init('http://myurlhere.com', {
+    beforeSend: (req) => {
+        //Lets modify the request object and return it.
+        req.withCredentials = "true",
+        req.setRequestHeader("Authorization", "Basic " + btoa("user:pass"));
+        return req;
+    }
+});
+
+```
 
 ### Custom calls and endpoints
 For custom calls (plugin endpoints etc.). There's a base method:

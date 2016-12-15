@@ -1,6 +1,6 @@
 "use strict";
 
-const WPJSApiHTTP = function(url, args, method) {
+const WPJSApiHTTP = function(url, args, method, reqOpts) {
     var promise = new Promise(function (resolve, reject) {
         var client = new XMLHttpRequest();
         var uri = url;
@@ -17,6 +17,9 @@ const WPJSApiHTTP = function(url, args, method) {
             }
         }
         client.open(method, uri);
+        if (reqOpts.beforeSend) {
+            client = reqOpts.beforeSend(client);
+        }
         client.send();
         client.onload = function () {
             if (this.status >= 200 && this.status < 300) {
@@ -46,8 +49,9 @@ const WPJSApiEndpoint = {
 }
 
 const WPJSApi = {
-    init: function (url) {
+    init: function (url, reqOpts) {
         this.base_url = url;
+        this.reqOpts = reqOpts;
     },
     call: function (domain, endpoint, args, method) {
         if (typeof this.base_url !== 'string') {
@@ -58,7 +62,7 @@ const WPJSApi = {
             method = 'GET';
         }
         var url = [this.base_url, 'wp-json', domain + '/v2', endpoint].join('/');
-        return WPJSApiHTTP(url, args, method);
+        return WPJSApiHTTP(url, args, method, this.reqOpts);
     },
     create: WPJSApiEndpoint.create
 }
