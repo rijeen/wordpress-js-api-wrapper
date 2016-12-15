@@ -17,7 +17,7 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
             }
         }
         client.open(method, uri);
-        if (reqOpts.beforeSend) {
+        if (reqOpts && reqOpts.beforeSend) {
             client = reqOpts.beforeSend(client);
         }
         client.send();
