@@ -1,5 +1,3 @@
-"use strict";
-
 const WPJSApiHTTP = function(url, args, method, reqOpts) {
     var promise = new Promise(function (resolve, reject) {
         var client = new XMLHttpRequest();
