@@ -1,8 +1,8 @@
-#Wordpress JS API Wrapper
+# Wordpress JS API Wrapper
 A very simple promise-based javascript wrapper for the Wordpress REST API v2.
 It was created to help the developer focus on getting data from the API and functionality, instead of having to read up on the url scheme for each endpoint when working.
 
-##How to use
+## How to use
 Installation with npm
 ```
 npm install wordpress-js-api-wrapper
@@ -50,7 +50,8 @@ $.get(WPJSApi.Media.getURL(3), function(rsp) {
 
 ```
 
-##Documentation
+## Documentation
+
 | Object | Available methods | Response |
 | ------ | ----------------- | -------- |
 | WPJSApi.Pages | list, get, getURL, listURL   | Array, Object, string, string    |
@@ -64,7 +65,9 @@ $.get(WPJSApi.Media.getURL(3), function(rsp) {
 | WPJSApi.Tags | list, get, getURL, listURL   | Array, Object, string, string    |
 | WPJSApi.Users | list, get, getURL, listURL   | Array, Object, string, string   |
 
+
 | Method | Parameters | ... |
+| ------ | ----------------- | -------- |
 | list(args)  | args object | |
 | get(id, args)     | id int, args array | Pass extra parameters using the args array, will be appended to end of url-string. |
 | listURL(args)     | args object | |
