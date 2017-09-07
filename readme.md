@@ -3,6 +3,9 @@ A very simple promise-based javascript wrapper for the Wordpress REST API v2.
 It was created to help the developer focus on getting data from the API and functionality, instead of having to read up on the url scheme for each endpoint when working.
 
 
+## NEW! v1.3.1
+- softFail now properly uses _envelope-flag, see: https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_envelope thus changing the response format.
+
 ## NEW! v1.3
 - Added post() method. Available on all endpoints like .post({ args.. }). Useful for creating custom endpoints that handles input.
 - Better configuration capabilities
@@ -142,7 +145,8 @@ WPJSApi.init('http://myurlhere.com', {
 });
 ```
 
-## softFail
+## softFail (v1.3)
+The option softFail appends the _envelope-flag to the request. This changes the response format and always returning a HTTP 200 OK. See more: https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_envelope
 ```javascript
 WPJSApi.init('http://myurlhere.com', {
     softFail: true
@@ -150,11 +154,11 @@ WPJSApi.init('http://myurlhere.com', {
 
 //Now we better check if the request was successful
 WPJSApi.Posts.list().then(function(rsp) {
-    //Check the response to see if it contains code from the WP-REST-API
-    if (rsp.code) {
-        //Most likely something failed, could be missing-parameter or unknown endpoint etc.
+    //Check the response status
+    if (rsp.status == 200) {
+        console.log(rsp.body);
     } else {
-        //If there is no rsp.code we will have gotten the result, meaning its successful
+        //Most likely something failed, could be missing-parameter or unknown endpoint etc.
     }
 
 }, function(reason) {
@@ -191,4 +195,4 @@ console.log(WPJSApiMenu.getURL(3)); // returns string: http://example.com/wp-jso
 ```
 
 See WP REST API v2 for full reference and response schema:
-[http://v2.wp-api.org/](http://v2.wp-api.org/)
+[https://developer.wordpress.org/rest-api/](https://developer.wordpress.org/rest-api/)

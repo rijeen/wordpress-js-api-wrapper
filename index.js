@@ -2,6 +2,11 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
     var promise = new Promise(function (resolve, reject) {
         var client = new XMLHttpRequest();
         var uri = url;
+
+        if (reqOpts.softFail === true || method == 'POST') {
+            args._envelope = 1;
+        }
+
         if (args) {
             uri += '?';
             var argcount = 0;
@@ -20,7 +25,7 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
         }
         client.send();
         client.onload = function () {
-            if (this.status >= 200 && this.status < 300 || reqOpts.softFail === true || method == 'POST') {
+            if (this.status >= 200 && this.status < 300) {
 
                 var rsp = this.response;
                 if (reqOpts.onSuccess) {
