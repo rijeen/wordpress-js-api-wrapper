@@ -4,7 +4,13 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
         var uri = url;
 
         if (reqOpts.softFail === true || method == 'POST') {
-            args._envelope = 1;
+            if (args) {
+                args._envelope = 1;
+            } else {
+                args = {
+                    _envelope: 1
+                }
+            }
         }
 
         if (args) {
