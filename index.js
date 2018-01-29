@@ -3,17 +3,31 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
         var client = new XMLHttpRequest();
         var uri = url;
 
-        if (reqOpts.softFail === true || method == 'POST') {
+        var formData = new FormData();
+        if (method == 'POST') {
+
+            uri += '?_envelope=1';
+
             if (args) {
-                args._envelope = 1;
-            } else {
-                args = {
-                    _envelope: 1
+                for (var key in args) {
+                    if (args.hasOwnProperty(key)) {
+                        formData.append(key, args[key]);
+                    }
                 }
             }
-        }
 
-        if (args) {
+        } else if (args) {
+
+            if (reqOpts.softFail === true) {
+                if (args) {
+                    args._envelope = 1;
+                } else {
+                    args = {
+                        _envelope: 1
+                    }
+                }
+            }
+
             uri += '?';
             var argcount = 0;
             for (var key in args) {
@@ -25,11 +39,12 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
                 }
             }
         }
+
         client.open(method, uri);
         if (reqOpts.beforeSend) {
             client = reqOpts.beforeSend(client);
         }
-        client.send();
+        client.send(formData);
         client.onload = function () {
             if (this.status >= 200 && this.status < 300) {
 
