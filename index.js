@@ -1,4 +1,4 @@
-const WPJSApiHTTP = function(url, args, method, reqOpts) {
+var WPJSApiHTTP = function(url, args, method, reqOpts) {
     var promise = new Promise(function (resolve, reject) {
         var client = new XMLHttpRequest();
         var uri = url;
@@ -75,7 +75,7 @@ const WPJSApiHTTP = function(url, args, method, reqOpts) {
     return promise;
 }
 
-const WPJSApiEndpoint = {
+var WPJSApiEndpoint = {
     create: function(domain, endpoint, version) {
 
         if (typeof version !== 'string') {
@@ -95,7 +95,7 @@ const WPJSApiEndpoint = {
     }
 }
 
-const WPJSApi = {
+var WPJSApi = {
     init: function (url, reqOpts) {
         this.base_url = url;
         this.reqOpts = {
