@@ -3,13 +3,13 @@ A very simple promise-based javascript wrapper for the Wordpress REST API v2.
 It was created to help the developer focus on getting data from the API and functionality, instead of having to read up on the url scheme for each endpoint when working.
 
 
-## NEW! v1.4.0
+## v1.4.0
 - Using method "POST" now properly use FormData.
 
-## NEW! v1.3.1
+## v1.3.1
 - softFail now properly uses _envelope-flag, see: https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_envelope thus changing the response format.
 
-## NEW! v1.3
+## v1.3
 - Added post() method. Available on all endpoints like .post({ args.. }). Useful for creating custom endpoints that handles input.
 - Better configuration capabilities
 - Default prefix now easily set with requestOption.prefix
