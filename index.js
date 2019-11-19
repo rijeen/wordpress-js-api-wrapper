@@ -89,7 +89,7 @@ var WPJSApiEndpoint = {
             listURL: function(args) { return [WPJSApi.base_url, WPJSApi.reqOpts.prefix, domain + '/' + version, endpoint].join('/') },
             getURL: function(id, args) { return [WPJSApi.base_url, WPJSApi.reqOpts.prefix, domain + '/' + version, endpoint, id, args].join('/') },
             'list': function(args) { return WPJSApi.call(domain, endpoint, args, 'GET', version) },
-            'get': function(id, args) { return  WPJSApi.call(domain, [endpoint, id.toString(), args].join('/'), args, 'GET', version) },
+            'get': function(id, args) { return  WPJSApi.call(domain, [endpoint, id.toString()].join('/'), args, 'GET', version) },
             'post': function(args) { return WPJSApi.call(domain, endpoint, args, 'POST', version) }
         };
     }
