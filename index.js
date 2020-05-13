@@ -28,16 +28,27 @@ var WPJSApiHTTP = function(url, args, method, reqOpts) {
                 }
             }
 
-            uri += '?';
-            var argcount = 0;
-            for (var key in args) {
-                if (args.hasOwnProperty(key)) {
-                    if (argcount++) {
-                        uri += '&';
-                    }
-                    uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
-                }
+            if (reqOpts && reqOpts.appendParams === true) {
+              uri += '/';
+              for (var key in args) {
+                uri += encodeURIComponent(args[key]);
+              }
+            } else {
+              uri += '?';
+              var argcount = 0;
+              for (var key in args) {
+                  if (args.hasOwnProperty(key)) {
+                      if (argcount++) {
+                          uri += '&';
+                      }
+                      uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
+                  }
+              }
             }
+        }
+
+        if (reqOpts && reqOpts.appendURL) {
+          uri += reqOpts.appendURL;
         }
 
         client.open(method, uri);
@@ -103,11 +114,17 @@ var WPJSApi = {
             softFail: false,
             beforeSend: null,
             onSuccess: null,
-            onFail: null
+            onFail: null,
+            urlbuilder: null,
+            appendURL: null,
+            appendParams: false
         };
 
         if (reqOpts) {
             if (reqOpts.prefix)     { this.reqOpts.prefix = reqOpts.prefix; }
+            if (reqOpts.urlbuilder)     { this.reqOpts.urlbuilder = reqOpts.urlbuilder; }
+            if (reqOpts.appendParams)     { this.reqOpts.appendParams = reqOpts.appendParams; }
+            if (reqOpts.appendURL)     { this.reqOpts.appendURL = reqOpts.appendURL; }
             if (reqOpts.softFail)   { this.reqOpts.softFail = reqOpts.softFail; }
             if (reqOpts.onSuccess)  { this.reqOpts.onSuccess = reqOpts.onSuccess; }
             if (reqOpts.onFail)     { this.reqOpts.onFail = reqOpts.onFail; }
@@ -123,6 +140,9 @@ var WPJSApi = {
             method = 'GET';
         }
         var url = [this.base_url, this.reqOpts.prefix, domain + '/' + version, endpoint].join('/');
+        if (this.reqOpts && this.reqOpts.urlbuilder) {
+          url = this.reqOpts.urlbuilder(this.base_url, domain, endpoint);
+        }
         return WPJSApiHTTP(url, args, method, this.reqOpts);
     },
     create: WPJSApiEndpoint.create

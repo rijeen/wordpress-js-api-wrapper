@@ -2,6 +2,8 @@
 A very simple promise-based javascript wrapper for the Wordpress REST API v2.
 It was created to help the developer focus on getting data from the API and functionality, instead of having to read up on the url scheme for each endpoint when working.
 
+## 1.7.0
+- Added urlbuilder and append options.
 
 ## v1.4.0
 - Using method "POST" now properly use FormData.
@@ -100,6 +102,9 @@ Passed as default global parameters to WPJSApi.init.
 | Parameter | Default | ... |
 | ------ | -------- |  -------- |
 | prefix | 'wp-json' | Set a custom prefix  |
+| appendParams | false | If set to true, append url parameters to the end of the uri. Eg test1=1 will become /myurl/test1  |
+| appendURL | null | A callback triggered to make custom request uri, has to return a string. urlBuilder(this.base_url, domain, endpoint)  |
+| urlbuilder | null | Append string to the end of the url. Eg .json will become /myurl.json  |
 | softFail | false | If set to true all requests will be resolved in the promise-object, meaning you have to take care of statuscodes inside your own callbacks.  |
 | beforeSend | null | Used to modify the XMLHTTPRequest object, must return the same request object |
 | onSuccess  | null | A callback triggered everytime on a successful response, onSuccess(response) |
