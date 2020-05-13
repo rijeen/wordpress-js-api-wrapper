@@ -1,6 +1,6 @@
 {
   "name": "wordpress-js-api-wrapper",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Wraps an external wordpress v2 API in a simple to use singleton class.",
   "main": "index.js",
   "scripts": {
